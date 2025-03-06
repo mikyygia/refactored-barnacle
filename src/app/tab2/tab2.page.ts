@@ -7,7 +7,18 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class LogPage {
+  selectedLevel: number | null = null;
+  currentTime: Date = new Date();
+  sleepinessNotes: string = '';
 
-  constructor() {}
+  constructor() {
+    // Update time every minute
+    setInterval(() => {
+      this.currentTime = new Date();
+    }, 60000);
+  }
 
+  selectLevel(level: number) {
+    this.selectedLevel = level;
+  }
 }
