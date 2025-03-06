@@ -1,0 +1,7 @@
+{
+  "name": "Snoozer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
