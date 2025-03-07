@@ -1,13 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>History</ion-title>
+    <ion-card-subtitle style="text-align: center;">View your sleep and sleepiness data</ion-card-subtitle>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!-- Display History -->
   <div class="history-container">
     <ion-list>
+       <!-- Loops through all sleep data -->
       <ion-item-sliding *ngFor="let data of allSleepData">
+         <!-- Display Overnight Sleep Data-->
         <ion-item *ngIf="isSleepData(data)">
           <ion-label>
             <h2>{{ data.dateString() }}</h2>
@@ -17,7 +21,8 @@
             {{ data.summaryString() }}
           </ion-note>
         </ion-item>
-
+        
+         <!-- Display Sleepiness Data-->
         <ion-item *ngIf="isSleepinessData(data)">
           <ion-label>
             <h2>{{ data.dateString() }}</h2>

@@ -13,6 +13,7 @@ export class OvernightSleepData extends SleepData {
 	}
 
 	override summaryString():string {
+		
 		var sleepStart_ms = this.sleepStart.getTime();
 		var sleepEnd_ms = this.sleepEnd.getTime();
 
@@ -20,9 +21,10 @@ export class OvernightSleepData extends SleepData {
 		var difference_ms = sleepEnd_ms - sleepStart_ms;
 		    
 		// Convert to hours and minutes
-		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes.";
+		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes";
+		// return Math.floor(Math.abs(this.sleepEnd.getTime() - this.sleepStart.getTime()) / (1000 * 60 * 60 * 24)) + "time"; 
 	}
-	
+
 	override dateString():string {
 		const formattedDate = this.sleepStart.toLocaleDateString('en-US', {
 			weekday: 'long',
