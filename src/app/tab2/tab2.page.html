@@ -1,14 +1,13 @@
-<ion-header [translucent]="true">
+
+ <ion-header [translucent]="true"> 
   <ion-toolbar>
-    <ion-title>
-      Log
-    </ion-title>
+    <ion-title>Log Sleep</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="card-container">
-    <!-- Log Sleep Card -->
+    <!-- Log Overnight Sleep -->
     <ion-card class="log-card">
       <ion-card-header>
         <ion-card-title>Track Your Sleep</ion-card-title>
@@ -19,29 +18,34 @@
         <div class="time-inputs">
           <ion-item>
             <ion-label>Bedtime</ion-label>
-            <ion-datetime-button datetime="bedtime"></ion-datetime-button>
+            <!-- trigger the datetime modal -->
+            <ion-datetime-button [datetime]="'bedtime'"></ion-datetime-button>
+          
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="bedtime" presentation="date-time"></ion-datetime>
+                <ion-datetime [(ngModel)]="bedtime" id="bedtime" presentation="date-time"></ion-datetime>
               </ng-template>
             </ion-modal>
           </ion-item>
-
+          
           <ion-item>
             <ion-label>Wake time</ion-label>
-            <ion-datetime-button datetime="waketime"></ion-datetime-button>
+            <!-- trigger the datetime modal for Wake time -->
+            <ion-datetime-button [datetime]="'waketime'"></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <ion-datetime id="waketime" presentation="date-time"></ion-datetime>
+                <ion-datetime [(ngModel)]="waketime" id="waketime" presentation="date-time"></ion-datetime>
               </ng-template>
             </ion-modal>
-          </ion-item>
+          </ion-item>    
         </div>
-        <ion-button class="submit-button"><ion-icon name="moon-outline" style="padding: 0 4px;"></ion-icon>Log Sleep</ion-button>
+        <ion-button class="submit-button" (click)="logSleep()">
+          <ion-icon name="moon-outline" style="padding: 0 4px;"></ion-icon> Log Sleep
+        </ion-button>        
       </ion-card-content>
     </ion-card>
 
-    <!-- Log Sleepiness Card -->
+    <!-- Log Sleepiness -->
     <ion-card class="log-card">
       <ion-card-header>
         <ion-card-title>Sleepiness Tracker</ion-card-title>
@@ -57,7 +61,7 @@
           </div>
         </div>
         
-        <!-- Cards for larger screens -->
+        <!-- Log Sleepiness Desktop View -->
         <div class="sleepiness-scale desktop-only">
           <ion-card button class="scale-card" [class.selected]="selectedLevel === 1">
             <ion-card-content>1<br>Wide Awake</ion-card-content>
@@ -82,7 +86,7 @@
           </ion-card>
         </div>
 
-        <!-- Dropdown for mobile -->
+        <!-- Log Sleepiness Mobile View -->
         <ion-item class="mobile-only">
           <ion-label>Sleepiness Level</ion-label>
           <ion-select [(ngModel)]="selectedLevel">
@@ -95,7 +99,7 @@
             <ion-select-option value="7">7 - Almost asleep</ion-select-option>
           </ion-select>
         </ion-item>
-
+    
         <ion-item>
           <ion-label>Time</ion-label>
           <ion-datetime-button datetime="sleepinesstime"></ion-datetime-button>
@@ -117,6 +121,7 @@
 
         <ion-button class="submit-button"><ion-icon name="moon-outline" style="padding: 0 4px;"></ion-icon> Log Sleepiness Level</ion-button>
 
+        <!-- Sleepiness Description -->
         <div class="scale-legend">
           <h4>Sleepiness Scale:</h4>
           <ion-list lines="none">
@@ -126,7 +131,7 @@
             <ion-item>4 - A little foggy: somewhat foggy, let down</ion-item>
             <ion-item>5 - Foggy: losing interest in remaining awake; slowed down</ion-item>
             <ion-item>6 - Very sleepy: Sleepy, woozy, fighting sleep; prefer to lie down</ion-item>
-            <ion-item>7 - Almost asleep: No longer fighting sleep, sleep onset soon</ion-item>
+            <ion-item>7 - Almost asleep: No longer fighting sleep, sleep onset soon;</ion-item>
           </ion-list>
         </div>
       </ion-card-content>

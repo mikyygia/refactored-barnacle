@@ -1,17 +1,39 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      History
-    </ion-title>
+    <ion-title>History</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">History</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="history-container">
+    <ion-list>
+      <ion-item-sliding *ngFor="let data of allSleepData">
+        <ion-item *ngIf="isSleepData(data)">
+          <ion-label>
+            <h2>{{ data.dateString() }}</h2>
+            <p>Sleep Record</p>
+          </ion-label>
+          <ion-note slot="end" class="total-sleep">
+            {{ data.summaryString() }}
+          </ion-note>
+        </ion-item>
 
-  <app-explore-container name="History page"></app-explore-container>
+        <ion-item *ngIf="isSleepinessData(data)">
+          <ion-label>
+            <h2>{{ data.dateString() }}</h2>
+            <p>Sleepiness Level</p>
+          </ion-label>
+          <ion-note slot="end" class="sleepiness-level">
+            {{ data.summaryString() }}
+          </ion-note>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="primary">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
 </ion-content>

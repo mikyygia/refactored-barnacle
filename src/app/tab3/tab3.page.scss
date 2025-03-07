@@ -1,0 +1,32 @@
+.history-container {
+  padding: 16px;
+}
+
+ion-item {
+  --padding-start: 0;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  --background: var(--ion-card-background);
+
+  h2 {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+
+  p {
+    color: var(--ion-color-medium);
+  }
+}
+
+.total-sleep {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+ion-item-sliding {
+  margin-bottom: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+}
