@@ -13,7 +13,7 @@ import { InsightPageRoutingModule } from './tab1-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    InsightPageRoutingModule
+    InsightPageRoutingModule,
   ],
   declarations: [InsightPage]
 })

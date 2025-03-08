@@ -54,7 +54,8 @@ export class LogPage {
 
       // Clear form
       this.selectedLevel = null;
-      this.sleepinessTime = '';
+      // this.sleepinessTime = '';
+      this.sleepinessTime = new Date().toISOString();
       this.sleepinessNotes = '';
     }
   }
