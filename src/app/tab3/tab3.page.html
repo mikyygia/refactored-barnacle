@@ -9,9 +9,9 @@
   <!-- Display History -->
   <div class="history-container">
     <ion-list>
-       <!-- Loops through all sleep data -->
+      <!-- Loops through all sleep data -->
       <ion-item-sliding *ngFor="let data of allSleepData">
-         <!-- Display Overnight Sleep Data-->
+        <!-- Display Overnight Sleep Data-->
         <ion-item *ngIf="isSleepData(data)">
           <ion-label>
             <h2>{{ data.dateString() }}</h2>
@@ -21,8 +21,8 @@
             {{ data.summaryString() }}
           </ion-note>
         </ion-item>
-        
-         <!-- Display Sleepiness Data-->
+
+        <!-- Display Sleepiness Data-->
         <ion-item *ngIf="isSleepinessData(data)">
           <ion-label>
             <h2>{{ data.dateString() }}</h2>

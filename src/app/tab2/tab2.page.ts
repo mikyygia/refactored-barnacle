@@ -13,11 +13,11 @@ export class LogPage {
   selectedLevel: number | null = null;
   currentTime: Date = new Date();
   sleepinessNotes: string = '';
-  
-  // Add variables to store selected times
+
   bedtime: string = new Date().toISOString();
   waketime: string = new Date().toISOString();
-  sleepinessTime: string = '';
+
+  sleepinessTime: string = new Date().toISOString();
   lastLoggedSleep?: OvernightSleepData;
 
   constructor(private sleepService: SleepService) {
@@ -36,22 +36,22 @@ export class LogPage {
       new Date(this.bedtime), // sleepStart
       new Date(this.waketime) // sleepEnd
     );
-    
+
     await this.sleepService.logOvernightData(sleepData);
     this.lastLoggedSleep = sleepData;
   }
 
-  logSleepiness() {
+  async logSleepiness() {
     console.log('Selected Level:', this.selectedLevel);
-    console.log('Sleepiness Time:', this.sleepinessTime);
+    console.log('Sleepiness Time:', this.sleepinessTime);  // Debugging log to check sleepiness time
+
     if (this.selectedLevel && this.sleepinessTime) {
-      const sleepinessData = new StanfordSleepinessData(
-        this.selectedLevel,
-        new Date(this.sleepinessTime)
+      const sleepinessData = new StanfordSleepinessData(this.selectedLevel, new Date(this.sleepinessTime)
       );
-      this.sleepService.logSleepinessData(sleepinessData);
+
+      await this.sleepService.logSleepinessData(sleepinessData);
       console.log('Sleepiness logged:', sleepinessData); // Debug log
-      
+
       // Clear form
       this.selectedLevel = null;
       this.sleepinessTime = '';

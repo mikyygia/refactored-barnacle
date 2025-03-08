@@ -1,10 +1,10 @@
 import { SleepData } from './sleep-data';
 
 export class OvernightSleepData extends SleepData {
-	public sleepStart:Date;
-	public sleepEnd:Date;
+	public sleepStart: Date;
+	public sleepEnd: Date;
 
-	constructor(sleepStart:Date, sleepEnd:Date) {
+	constructor(sleepStart: Date, sleepEnd: Date) {
 		super();
 		this.sleepStart = sleepStart;
 		this.sleepEnd = sleepEnd;
@@ -12,30 +12,37 @@ export class OvernightSleepData extends SleepData {
 		console.log("Overnight: ", this.sleepStart, this.sleepEnd);
 	}
 
-	override summaryString():string {
-		
+	override summaryString(): string {
+
 		var sleepStart_ms = this.sleepStart.getTime();
 		var sleepEnd_ms = this.sleepEnd.getTime();
 
 		// Calculate the difference in milliseconds
 		var difference_ms = sleepEnd_ms - sleepStart_ms;
-		    
+
 		// Convert to hours and minutes
-		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes";
+		return Math.floor(difference_ms / (1000 * 60 * 60)) + " hours, " + Math.floor(difference_ms / (1000 * 60) % 60) + " minutes";
 		// return Math.floor(Math.abs(this.sleepEnd.getTime() - this.sleepStart.getTime()) / (1000 * 60 * 60 * 24)) + "time"; 
 	}
 
-	override dateString():string {
-		const formattedDate = this.sleepStart.toLocaleDateString('en-US', {
-			weekday: 'long',
+	override dateString(): string {
+		const formattedDate_start = this.sleepStart.toLocaleDateString('en-US', {
+			weekday: 'short',
 			month: 'long',
 			day: 'numeric',
 			year: 'numeric'
 		});
-  
+
+		const formattedDate_end = this.sleepEnd.toLocaleDateString('en-US', {
+			weekday: 'short',
+			month: 'long',
+			day: 'numeric',
+			year: 'numeric'
+		});
+
 		// return "Night of " + this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 		// return this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
-		return`${formattedDate}`;
+		return `${formattedDate_start} to ${formattedDate_end}`;
 	}
 }

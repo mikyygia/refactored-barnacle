@@ -6,7 +6,7 @@ import { StorageService } from './storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class SleepService {
 	// private static LoadDefaultData: boolean = true;
@@ -16,7 +16,11 @@ export class SleepService {
 	private static AllSleepData: (OvernightSleepData | StanfordSleepinessData)[] = [];
 
 	private sleepRecords: OvernightSleepData[] = [];
-  	private sleepRecordsSubject = new BehaviorSubject<OvernightSleepData[]>(this.sleepRecords);
+	private sleepRecordsSubject = new BehaviorSubject<OvernightSleepData[]>(this.sleepRecords);
+
+	private sleepinessRecords: StanfordSleepinessData[] = [];
+	private sleepinessRecordsSubject = new BehaviorSubject<StanfordSleepinessData[]>(this.sleepinessRecords);
+
 
 	constructor(private storageService: StorageService) {
 		this.loadSleepData(); // Load existing data on initialization
@@ -34,26 +38,30 @@ export class SleepService {
 
 	private async loadSleepData() {
 		try {
-		  const data = await this.storageService.get('sleepData') || [];
-		  if (data && data.length) {
-			SleepService.AllSleepData = data;
-		  } else {
-			this.addDefaultData(); // load default data if nothing is found
-		  }
-		  this.updateSleepDataSubject(); // Emit new data to subscribers
+			const data = await this.storageService.get('sleepData') || [];
+			if (data && data.length) {
+				SleepService.AllSleepData = data;
+			} else {
+				this.addDefaultData(); // load default data if nothing is found
+			}
+			this.updateSleepDataSubject();
 		} catch (error) {
-		  console.error('Error loading sleep data:', error);
-		  this.addDefaultData(); // loading failed
+			console.error('Error loading sleep data:', error);
+			this.addDefaultData(); // loading failed
 		}
-	  }
+	}
 
 	private updateSleepDataSubject() {
-		const overnightData = SleepService.AllSleepData.filter(
-			data => data instanceof OvernightSleepData
-		) as OvernightSleepData[];
+		// Updating both sleep and sleepiness data
+		const overnightData = SleepService.AllSleepData.filter(data => data instanceof OvernightSleepData) as OvernightSleepData[];
+		const sleepinessData = SleepService.AllSleepData.filter(data => data instanceof StanfordSleepinessData) as StanfordSleepinessData[];
+
 		this.sleepRecords = overnightData;
+		this.sleepinessRecords = sleepinessData;
+
 		this.sleepRecordsSubject.next([...this.sleepRecords]);
-	}	
+		this.sleepinessRecordsSubject.next([...this.sleepinessRecords]);  // Ensure sleepiness data is emitted too
+	}
 
 	private addDefaultData() {
 		var goToBed = new Date();
@@ -75,11 +83,12 @@ export class SleepService {
 	}
 
 	public async logOvernightData(sleepData: OvernightSleepData) {
-		SleepService.AllSleepData.push(sleepData);
+		SleepService.AllSleepData.unshift(sleepData);
 		await this.storageService.set('sleepData', SleepService.AllSleepData);
 		this.updateSleepDataSubject();
 	}
 
+	// Method to log sleepiness data
 	public async logSleepinessData(sleepData: StanfordSleepinessData) {
 		SleepService.AllSleepData.unshift(sleepData);
 		await this.storageService.set('sleepData', SleepService.AllSleepData);
@@ -93,10 +102,14 @@ export class SleepService {
 		this.sleepRecordsSubject.next([...this.sleepRecords]); // Emit new value
 		// Also save to storage
 		this.logOvernightData(newRecord);
-	  }
-	
-	// Method to get observable sleep data
+	}
+
+	// Get sleep and sleepiness data
 	getSleepRecords(): Observable<OvernightSleepData[]> {
 		return this.sleepRecordsSubject.asObservable();
+	}
+
+	getSleepinessRecords(): Observable<StanfordSleepinessData[]> {
+		return this.sleepinessRecordsSubject.asObservable();
 	}
 }

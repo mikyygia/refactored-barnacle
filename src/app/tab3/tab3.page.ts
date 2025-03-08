@@ -10,9 +10,10 @@ import { SleepData } from '../data/sleep-data';
   styleUrls: ['tab3.page.scss'],
   standalone: false,
 })
-export class HistoryPage implements OnInit{
+export class HistoryPage implements OnInit {
   allSleepData: SleepData[] = [];
   sleepRecords: OvernightSleepData[] = [];
+  sleepinessData: StanfordSleepinessData[] = [];
 
   constructor(private sleepService: SleepService) {
     this.allSleepData = this.sleepService.getAllSleepData();
@@ -31,6 +32,9 @@ export class HistoryPage implements OnInit{
     this.sleepService.getSleepRecords().subscribe((records) => {
       this.sleepRecords = records;
     });
+
+    this.sleepService.getSleepinessRecords().subscribe((records) => {
+      this.sleepinessData = records;
+    });
   }
 }
-

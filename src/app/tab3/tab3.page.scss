@@ -30,3 +30,17 @@ ion-item-sliding {
   border-radius: 8px;
   overflow: hidden;
 }
+
+.sleepiness-level {
+  color: white;
+  font-size: 0.9rem;
+  padding: 16px;
+}
+
+.color-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+}
