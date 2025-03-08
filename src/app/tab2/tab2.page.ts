@@ -10,53 +10,39 @@ import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
   standalone: false,
 })
 export class LogPage {
-  selectedLevel: number | null = null;
-  currentTime: Date = new Date();
-  sleepinessNotes: string = '';
+  selected_level: number | null = null;
+  current_time: Date = new Date();
+  sleepiness_notes: string = '';
 
   bedtime: string = new Date().toISOString();
   waketime: string = new Date().toISOString();
 
-  sleepinessTime: string = new Date().toISOString();
+  sleepiness_time: string = new Date().toISOString();
   lastLoggedSleep?: OvernightSleepData;
 
-  constructor(private sleepService: SleepService) {
-    // Update time every minute
-    setInterval(() => {
-      this.currentTime = new Date();
-    }, 60000);
-  }
+  constructor(private sleepService: SleepService) { setInterval(() => {this.current_time = new Date();}, 60000); }
 
-  selectLevel(level: number) {
-    this.selectedLevel = level;
-  }
+  select_level(level: number) { this.selected_level = level; }
 
-  async logSleep() {
+  async log_sleep() {
     const sleepData = new OvernightSleepData(
-      new Date(this.bedtime), // sleepStart
-      new Date(this.waketime) // sleepEnd
+      new Date(this.bedtime),
+      new Date(this.waketime)
     );
 
     await this.sleepService.logOvernightData(sleepData);
     this.lastLoggedSleep = sleepData;
   }
 
-  async logSleepiness() {
-    console.log('Selected Level:', this.selectedLevel);
-    console.log('Sleepiness Time:', this.sleepinessTime);  // Debugging log to check sleepiness time
-
-    if (this.selectedLevel && this.sleepinessTime) {
-      const sleepinessData = new StanfordSleepinessData(this.selectedLevel, new Date(this.sleepinessTime)
-      );
+  async log_sleepiness() {
+    if (this.selected_level && this.sleepiness_time) {
+      const sleepinessData = new StanfordSleepinessData(this.selected_level, new Date(this.sleepiness_time), this.sleepiness_notes);
 
       await this.sleepService.logSleepinessData(sleepinessData);
-      console.log('Sleepiness logged:', sleepinessData); // Debug log
 
-      // Clear form
-      this.selectedLevel = null;
-      // this.sleepinessTime = '';
-      this.sleepinessTime = new Date().toISOString();
-      this.sleepinessNotes = '';
+      this.selected_level = null;
+      this.sleepiness_time = new Date().toISOString();
+      this.sleepiness_notes = '';
     }
   }
 }

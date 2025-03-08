@@ -1,32 +1,55 @@
 import { Injectable } from '@angular/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { Platform } from '@ionic/angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SleepJournalReminderService {
-  constructor(private platform: Platform) {}
+  constructor() {}
 
+  // Request permission to use notifications
+  async requestPermissions() {
+    try {
+      const permission = await LocalNotifications.requestPermissions();
+      
+      if (permission.display === 'granted') {
+        console.log('Notification permission granted!');
+      } else {
+        console.log('Notification permission denied!');
+      }
+    } catch (error) {
+      console.error('Something went wrong', error);
+    }
+  }
+
+  // Schedule a reminder notification
   async scheduleReminder(reminderTime: Date) {
-    const permission = await LocalNotifications.requestPermissions();
+    try {
+      // Notification should only happen when permissions are granted
+      const permission = await LocalNotifications.requestPermissions();
+      
+      if (permission.display !== 'granted') {
+        console.error('Notification permission not granted');
+        return;
+      }
 
-    if (permission.display === 'granted') {
       const notification = await LocalNotifications.schedule({
         notifications: [
           {
-            title: "Sleep Reminder",
-            body: "Set a reminder for your next sleep!",
+            title: 'Sleep Log Reminder!',
+            body: 'Log your sleeping data!',
             id: 1,
-            schedule: { at: new Date(reminderTime.toISOString()) },
+            schedule: { at: reminderTime },
+            sound: 'beep.wav',
             actionTypeId: '',
-            extra: null
-          }
-        ]
+            extra: null,
+          },
+        ],
       });
-      // console.log('Reminder scheduled', notification);
-    } else {
-      console.error('Permission not granted for notifications');
+
+      console.log('Sleep scheduled:', notification);
+    } catch (error) {
+      console.error('Something went wrong.');
     }
   }
 }

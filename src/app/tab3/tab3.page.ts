@@ -16,7 +16,7 @@ export class HistoryPage implements OnInit {
   sleepinessData: StanfordSleepinessData[] = [];
 
   constructor(private sleepService: SleepService) {
-    this.allSleepData = this.sleepService.getAllSleepData();
+    this.allSleepData = this.sleepService.get_all_sleep_data();
     console.log('History Data:', this.allSleepData); // Debug log
   }
 
@@ -29,11 +29,11 @@ export class HistoryPage implements OnInit {
   }
 
   ngOnInit() {
-    this.sleepService.getSleepRecords().subscribe((records) => {
+    this.sleepService.get_sleep_records().subscribe((records) => {
       this.sleepRecords = records;
     });
 
-    this.sleepService.getSleepinessRecords().subscribe((records) => {
+    this.sleepService.get_sleepiness_records().subscribe((records) => {
       this.sleepinessData = records;
     });
   }

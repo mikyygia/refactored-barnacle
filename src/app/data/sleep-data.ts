@@ -17,4 +17,13 @@ export class SleepData {
 	dateString(): string {
 		return this.loggedAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 	}
+
+	get_note(): string {
+		return "";
+	}
+
+	get_logged_at(): any {
+		return this.loggedAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: "numeric" }) + " @ " + 
+				this.loggedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit',hour12: true });
+	}
 }

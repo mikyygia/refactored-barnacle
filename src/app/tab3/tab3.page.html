@@ -25,8 +25,9 @@
         <!-- Display Sleepiness Data-->
         <ion-item *ngIf="isSleepinessData(data)">
           <ion-label>
-            <h2>{{ data.dateString() }}</h2>
+            <h2>{{data.get_logged_at()}}</h2>
             <p>Sleepiness Level</p>
+            <p>Note: {{data.get_note() }}</p>
           </ion-label>
           <ion-note slot="end" class="sleepiness-level">
             {{ data.summaryString() }}

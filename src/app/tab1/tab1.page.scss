@@ -1,0 +1,16 @@
+ion-content {
+    ion-item{
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+    }
+
+    ion-button {
+        display: flex;
+        place-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 20%
+    }
+}

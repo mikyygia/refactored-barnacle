@@ -13,9 +13,9 @@ export class InsightPage {
 
   constructor(private sleepReminderService: SleepJournalReminderService) {}
 
-  scheduleReminder() {
-    const reminderTime = new Date(new Date().getTime() + 5 * 1000); // 5 seconds from now
-    this.reminderTime = reminderTime.toString(); // Convert to string for display purposes
+  schedule_reminder() {
+    const reminderTime = new Date(new Date().getTime() + 5 * 1000); 
+    this.reminderTime = reminderTime.toString();
 
     this.sleepReminderService.scheduleReminder(reminderTime);
 
